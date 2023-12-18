@@ -1,0 +1,193 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://prefab/Card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://prefab/HP.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Image/Player.png" type="Texture" id=3]
+[ext_resource path="res://prefab/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Script/Battle.gd" type="Script" id=5]
+[ext_resource path="res://Image/clock.png" type="Texture" id=6]
+[ext_resource path="res://prefab/buff.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Script/Clock.gd" type="Script" id=8]
+[ext_resource path="res://Script/Battle_clock_preview.gd" type="Script" id=9]
+[ext_resource path="res://Script/Deck.gd" type="Script" id=10]
+[ext_resource path="res://Image/card.png" type="Texture" id=11]
+[ext_resource path="res://Script/Used_deck.gd" type="Script" id=12]
+[ext_resource path="res://Image/gray_window.png" type="Texture" id=13]
+[ext_resource path="res://Script/Gray_window.gd" type="Script" id=14]
+[ext_resource path="res://Image/secondhand.png" type="Texture" id=15]
+[ext_resource path="res://Image/select.png" type="Texture" id=16]
+[ext_resource path="res://Image/select2.png" type="Texture" id=17]
+[ext_resource path="res://Image/select3.png" type="Texture" id=18]
+[ext_resource path="res://Image/select5.png" type="Texture" id=19]
+[ext_resource path="res://Image/select8.png" type="Texture" id=20]
+[ext_resource path="res://Image/select6.png" type="Texture" id=21]
+[ext_resource path="res://Image/select9.png" type="Texture" id=22]
+[ext_resource path="res://Image/select10.png" type="Texture" id=23]
+[ext_resource path="res://Image/select7.png" type="Texture" id=24]
+[ext_resource path="res://Image/select4.png" type="Texture" id=25]
+[ext_resource path="res://Image/select1.png" type="Texture" id=26]
+[ext_resource path="res://Script/Player.gd" type="Script" id=27]
+[ext_resource path="res://prefab/enemy_time_pos1.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Image/buff.png" type="Texture" id=29]
+[ext_resource path="res://Script/menu.gd" type="Script" id=30]
+[ext_resource path="res://Image/restart.png" type="Texture" id=31]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 16 ), ExtResource( 26 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 25 ), ExtResource( 19 ), ExtResource( 21 ), ExtResource( 24 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 24 ), ExtResource( 21 ), ExtResource( 19 ), ExtResource( 25 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 26 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[node name="Battle" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 100, 261 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 405, 260 )
+
+[node name="Enemy3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 697, 263 )
+
+[node name="Player" type="AnimatedSprite" parent="."]
+position = Vector2( 1372, 270 )
+frames = SubResource( 1 )
+offset = Vector2( 129, 129 )
+script = ExtResource( 27 )
+
+[node name="HP" parent="Player" instance=ExtResource( 2 )]
+position = Vector2( 129, 313 )
+
+[node name="buff" parent="Player" instance=ExtResource( 7 )]
+position = Vector2( 20, 359 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Player"]
+visible = false
+position = Vector2( 128, 129 )
+scale = Vector2( 2.25, 2.25 )
+frames = SubResource( 2 )
+frame = 1
+playing = true
+
+[node name="Card1" parent="." instance=ExtResource( 1 )]
+position = Vector2( 352, 883 )
+
+[node name="Card2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 548, 881.5 )
+
+[node name="Card3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 738, 878.5 )
+
+[node name="Card4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 924, 879.5 )
+
+[node name="Card5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1107, 878.5 )
+
+[node name="Card6" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1290, 877.5 )
+
+[node name="Deck" type="Sprite" parent="."]
+position = Vector2( 1791, 910 )
+texture = ExtResource( 11 )
+script = ExtResource( 10 )
+
+[node name="Button" type="Button" parent="Deck"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -87.0
+margin_top = -142.0
+margin_right = 86.0
+margin_bottom = 141.0
+
+[node name="Used_deck" type="Sprite" parent="."]
+position = Vector2( 113, 895 )
+texture = ExtResource( 11 )
+script = ExtResource( 12 )
+
+[node name="Button" type="Button" parent="Used_deck"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -87.0
+margin_top = -142.0
+margin_right = 86.0
+margin_bottom = 141.0
+
+[node name="menu" type="Sprite" parent="."]
+position = Vector2( 57, 57 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 29 )
+script = ExtResource( 30 )
+
+[node name="Button" type="Button" parent="menu"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="damage_text" type="Node2D" parent="."]
+
+[node name="Gray_window" type="Sprite" parent="."]
+visible = false
+z_index = 2
+texture = ExtResource( 13 )
+offset = Vector2( 960, 540 )
+script = ExtResource( 14 )
+
+[node name="Button" type="Button" parent="Gray_window"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="restart_image" type="Sprite" parent="."]
+position = Vector2( 0, -2160 )
+z_index = 3
+texture = ExtResource( 31 )
+offset = Vector2( 960, 1079 )
+
+[node name="Clock" type="Sprite" parent="."]
+position = Vector2( 960, -361 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 6 )
+script = ExtResource( 8 )
+
+[node name="enemy_time_pos1" parent="Clock" instance=ExtResource( 28 )]
+
+[node name="enemy_time_pos2" parent="Clock" instance=ExtResource( 28 )]
+
+[node name="enemy_time_pos3" parent="Clock" instance=ExtResource( 28 )]
+
+[node name="Button" type="Button" parent="Clock"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -256.0
+margin_top = -256.0
+margin_right = 256.0
+margin_bottom = 256.0
+rect_pivot_offset = Vector2( 256.5, 256 )
+focus_mode = 0
+enabled_focus_mode = 0
+
+[node name="Battle_clock_preview" type="Node2D" parent="Clock"]
+z_index = 1
+script = ExtResource( 9 )
+
+[node name="Secondhand" type="Sprite" parent="Clock"]
+scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 15 )
+
+[connection signal="pressed" from="Deck/Button" to="Deck" method="_on_Button_pressed"]
+[connection signal="pressed" from="Used_deck/Button" to="Used_deck" method="_on_Button_pressed"]
+[connection signal="pressed" from="menu/Button" to="menu" method="_on_Button_pressed"]
+[connection signal="pressed" from="Gray_window/Button" to="Gray_window" method="_on_Button_pressed"]
+[connection signal="button_down" from="Clock/Button" to="Clock" method="_on_Button_button_down"]
+[connection signal="button_up" from="Clock/Button" to="Clock" method="_on_Button_button_up"]

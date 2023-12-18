@@ -1,0 +1,73 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://prefab/Card_detail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Script/Reward.gd" type="Script" id=2]
+[ext_resource path="res://Theme/FontTC40.tres" type="Theme" id=3]
+
+[node name="Reward" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Card_detail" parent="." instance=ExtResource( 1 )]
+position = Vector2( 563, 533 )
+
+[node name="Card_detail2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 911, 535 )
+
+[node name="Card_detail3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1258, 543 )
+
+[node name="select1" type="Button" parent="."]
+margin_left = 476.0
+margin_top = 708.0
+margin_right = 649.0
+margin_bottom = 751.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "選擇"
+
+[node name="select2" type="Button" parent="."]
+margin_left = 820.0
+margin_top = 711.0
+margin_right = 993.0
+margin_bottom = 754.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "選擇"
+
+[node name="select3" type="Button" parent="."]
+margin_left = 1169.0
+margin_top = 716.0
+margin_right = 1342.0
+margin_bottom = 759.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "選擇"
+
+[node name="confirm" type="Button" parent="."]
+margin_left = 999.0
+margin_top = 927.0
+margin_right = 1229.0
+margin_bottom = 1004.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "拿取"
+
+[node name="skip" type="Button" parent="."]
+margin_left = 606.0
+margin_top = 928.0
+margin_right = 836.0
+margin_bottom = 1005.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "跳過"
+
+[connection signal="pressed" from="select1" to="." method="_on_select1_pressed"]
+[connection signal="pressed" from="select2" to="." method="_on_select2_pressed"]
+[connection signal="pressed" from="select3" to="." method="_on_select3_pressed"]
+[connection signal="pressed" from="confirm" to="." method="_on_confirm_pressed"]
+[connection signal="pressed" from="skip" to="." method="_on_skip_pressed"]

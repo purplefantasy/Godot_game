@@ -1,0 +1,98 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scenes/Battle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Road.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Script/Game.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Shop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Script/Card_data.gd" type="Script" id=5]
+[ext_resource path="res://Script/Player_deck.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/Reward.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Script/Player_state.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/Main_menu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Script/enemy_data.gd" type="Script" id=10]
+[ext_resource path="res://Script/Treasure.gd" type="Script" id=11]
+[ext_resource path="res://Theme/FontTC40.tres" type="Theme" id=12]
+[ext_resource path="res://Script/Secret.gd" type="Script" id=13]
+[ext_resource path="res://Script/Buff_data.gd" type="Script" id=14]
+[ext_resource path="res://Script/Clock_preview.gd" type="Script" id=15]
+[ext_resource path="res://Script/Enemy_skills.gd" type="Script" id=16]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Card_data" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="Shop" parent="." instance=ExtResource( 4 )]
+visible = false
+
+[node name="Battle" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[node name="Road" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="Player_deck" type="Node2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="Reward" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[node name="Player_state" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 8 )
+
+[node name="Main_menu" parent="." instance=ExtResource( 9 )]
+
+[node name="Secret" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 13 )
+
+[node name="Label" type="Label" parent="Secret"]
+margin_left = 782.0
+margin_top = 220.0
+margin_right = 1506.0
+margin_bottom = 572.0
+theme = ExtResource( 12 )
+text = "123456"
+
+[node name="Button" type="Button" parent="Secret"]
+margin_left = 778.0
+margin_top = 758.0
+margin_right = 1494.0
+margin_bottom = 848.0
+
+[node name="Button2" type="Button" parent="Secret"]
+margin_left = 778.0
+margin_top = 622.0
+margin_right = 1494.0
+margin_bottom = 724.0
+
+[node name="Treasure" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 11 )
+
+[node name="Button" type="Button" parent="Treasure"]
+margin_left = 1540.0
+margin_top = 822.0
+margin_right = 1784.0
+margin_bottom = 956.0
+
+[node name="Enemy_data" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="Buff_data" type="Node2D" parent="."]
+script = ExtResource( 14 )
+
+[node name="Clock_preview" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 15 )
+
+[node name="Sprite" type="Sprite" parent="Clock_preview"]
+
+[node name="Enemy_skills" type="Node2D" parent="."]
+script = ExtResource( 16 )
+
+[connection signal="pressed" from="Secret/Button" to="Secret" method="_on_Button_pressed"]
+[connection signal="pressed" from="Secret/Button2" to="Secret" method="_on_Button2_pressed"]
+[connection signal="pressed" from="Treasure/Button" to="Treasure" method="_on_Button_pressed"]

@@ -1,0 +1,100 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Image/Player.png" type="Texture" id=1]
+[ext_resource path="res://Script/Main_menu.gd" type="Script" id=2]
+[ext_resource path="res://Theme/FontTC40.tres" type="Theme" id=3]
+[ext_resource path="res://Script/class_select.gd" type="Script" id=4]
+[ext_resource path="res://Script/Class_image.gd" type="Script" id=5]
+[ext_resource path="res://Image/class_select.png" type="Texture" id=6]
+[ext_resource path="res://Image/buff.png" type="Texture" id=7]
+[ext_resource path="res://Image/gray_window.png" type="Texture" id=8]
+
+[node name="Main_menu" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="background" type="Sprite" parent="."]
+position = Vector2( 960, 540 )
+texture = ExtResource( 8 )
+
+[node name="main_menu_button" type="Node2D" parent="."]
+
+[node name="Select_class" type="Node2D" parent="."]
+visible = false
+
+[node name="Class_image" type="Sprite" parent="Select_class"]
+position = Vector2( 1226, 395 )
+texture = ExtResource( 1 )
+script = ExtResource( 5 )
+
+[node name="class_select" type="Sprite" parent="Select_class/Class_image"]
+position = Vector2( -399, 482 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 7 )
+script = ExtResource( 4 )
+
+[node name="class" type="Button" parent="Select_class/Class_image/class_select"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+focus_mode = 0
+enabled_focus_mode = 0
+
+[node name="Select_class" type="Sprite" parent="Select_class/Class_image/class_select"]
+visible = false
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 6 )
+
+[node name="Back" type="Sprite" parent="Select_class"]
+position = Vector2( 65, 63 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+
+[node name="Back" type="Button" parent="Select_class/Back"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 80.0
+margin_bottom = 16.0
+focus_mode = 0
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Select_class/Back"]
+margin_left = 25.5
+margin_top = -14.0
+margin_right = 65.5
+margin_bottom = 16.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 3 )
+text = "Back"
+
+[node name="Start" type="Sprite" parent="Select_class"]
+position = Vector2( 215, 896 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 7 )
+
+[node name="Start" type="Button" parent="Select_class/Start"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 80.0
+margin_bottom = 16.0
+focus_mode = 0
+enabled_focus_mode = 0
+
+[node name="Label" type="Label" parent="Select_class/Start"]
+margin_left = 23.0
+margin_top = -16.0
+margin_right = 99.0
+margin_bottom = 14.0
+rect_scale = Vector2( 0.5, 0.5 )
+theme = ExtResource( 3 )
+text = "Start"
+
+[connection signal="pressed" from="Select_class/Class_image/class_select/class" to="Select_class/Class_image/class_select" method="_on_class_pressed"]
+[connection signal="pressed" from="Select_class/Back/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="Select_class/Start/Start" to="." method="_on_Start_pressed"]

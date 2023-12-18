@@ -1,0 +1,60 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://prefab/HP.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Image/Enemy.png" type="Texture" id=2]
+[ext_resource path="res://Image/select1.png" type="Texture" id=3]
+[ext_resource path="res://Image/select.png" type="Texture" id=4]
+[ext_resource path="res://Image/select2.png" type="Texture" id=5]
+[ext_resource path="res://Image/select3.png" type="Texture" id=6]
+[ext_resource path="res://Image/select4.png" type="Texture" id=7]
+[ext_resource path="res://Image/select5.png" type="Texture" id=8]
+[ext_resource path="res://Image/select8.png" type="Texture" id=9]
+[ext_resource path="res://Image/select6.png" type="Texture" id=10]
+[ext_resource path="res://Image/select9.png" type="Texture" id=11]
+[ext_resource path="res://Image/select10.png" type="Texture" id=12]
+[ext_resource path="res://Image/select7.png" type="Texture" id=13]
+[ext_resource path="res://Script/Enemy.gd" type="Script" id=14]
+[ext_resource path="res://prefab/buff.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Fonts/SourceHanSansHWTC-Regular.otf" type="DynamicFontData" id=16]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 13 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 16 )
+
+[node name="Enemy" type="Sprite"]
+texture = ExtResource( 2 )
+offset = Vector2( 128.264, 128.673 )
+script = ExtResource( 14 )
+
+[node name="HP" parent="." instance=ExtResource( 1 )]
+position = Vector2( 128, 312 )
+
+[node name="buff" parent="." instance=ExtResource( 15 )]
+position = Vector2( 17, 347 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 128, 129 )
+scale = Vector2( 2.25, 2.25 )
+frames = SubResource( 1 )
+frame = 5
+playing = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_top = -64.0
+margin_right = 256.0
+custom_colors/default_color = Color( 0.741176, 0, 0, 1 )
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]123[/center]"
+text = "123"
