@@ -13,10 +13,11 @@ func _ready():
 	pass # Replace with function body.
 var hp_lose
 var hp_rate
+onready var player_state = get_parent().get_parent().get_node("Player_state")
 
 func restart():
-	max_hp = 100
-	hp = max_hp
+	hp = player_state.hp
+	max_hp = player_state.max_hp
 	shield = 0
 	get_node("buff").restart()
 

@@ -14,6 +14,9 @@ func _ready():
 	rng_seed = rng.seed
 	pass # Replace with function body.
 
+func start():
+	cards = []
+
 func restart():
 	cards = []
 	rng = RandomNumberGenerator.new()

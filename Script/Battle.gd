@@ -30,8 +30,30 @@ onready var enemy = [$"Enemy", $"Enemy2", $"Enemy3"]
 onready var card_data = get_parent().get_node("Card_data")
 var win = false
 onready var reward = get_parent().get_node("Reward")
+onready var player_state = get_parent().get_node("Player_state")
 
 func start():
+	player.hp = player_state.hp
+	player.max_hp = player_state.max_hp
+	for i in 4:
+		get_child(i).restart()
+	get_node("Deck").start()
+	get_node("Used_deck").start()
+	get_node("Clock").restart()
+	attack_enemy = [[],[],[],[]]
+	atk = 0
+	multiple = 1
+	frequency = 1
+	atk_sum = 0
+	use_card = true
+	timer = 0
+	player_turn = true
+	win = false
+	for i in 6:
+		card_data.new_index(get_node("Deck").draw_card(), i)
+		get_child(4+i).transform[2].x = get_node("Deck").transform[2].x
+		get_child(4+i).transform[2].y = get_node("Deck").transform[2].y
+		get_child(4+i).moving = true
 	pass
 
 func attack_player(num):
@@ -181,6 +203,7 @@ func _process(delta):
 		$".".visible = false
 		game.game_time += get_node("Clock").timer
 		reward.visible = true
+		player_state.hp = player.hp
 		restart()
 	frequency = player.get_node("buff").buffs[0]+1
 	multiple = player.get_node("buff").buffs[1]+1

@@ -58,7 +58,7 @@ func load_buff(index, buff_num_change):
 		for i in buff_list.size():
 			if i > 0:
 				var buff_shadow = load("res://prefab/buff_shadow.tscn").instance()
-				buff_shadow.get_child(0).text = String(buffs[buff_list[i]])
+				buff_shadow.get_node("Label").text = String(buffs[buff_list[i]])
 				buff_shadow.transform[2].x = 50*i
 				buff_shadow.transform[2].y = 0
 				add_child(buff_shadow)
@@ -70,7 +70,7 @@ func load_buff(index, buff_num_change):
 	else:
 		for i in buff_list.size()-1:
 			if buff_list[i+1] == index:
-				get_child(i+2).get_child(0).text = String(buffs[index])
+				get_child(i+2).get_node("Label").text = String(buffs[index])
 		if buff_list != []:
 			$Label.text = String(buffs[buff_list[0]])
 # Called every frame. 'delta' is the elapsed time since the previous frame.

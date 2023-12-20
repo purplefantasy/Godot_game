@@ -7,6 +7,7 @@ extends Sprite
 onready var game = get_parent().get_parent()
 var timer = 0.0
 var old_timer_floor = 0
+var timer_degree = 180-int(180+timer*6)%360+int(timer*6)-timer*6
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -20,6 +21,7 @@ var in_range = false
 var look_clock = false
 onready var old_y = transform[2].y
 var clock_return = true
+#var center = [2000, -500]
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -27,10 +29,12 @@ func _input(event):
 		mouse_y = event.position.y
 	pass
 
+
 func restart():
 	timer = game.game_time
 	old_timer_floor = floor(timer)
-	rotation_degrees = -timer*6
+	rotation_degrees = timer_degree
+	get_node("Secondhand").rotation_degrees = timer*6 + 180
 	for i in 3:
 		get_child(i).visible = true
 		get_child(i).modulate.a = 1.0
@@ -52,6 +56,7 @@ func add_time(num):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	timer_degree = 180-int(180+timer*6)%360+int(timer*6)-timer*6
 	if look_clock: 
 		if rotation_degrees != -180:
 			rotation_degrees -= (rotation_degrees-180) * delta *3
@@ -62,10 +67,10 @@ func _process(delta):
 		else:
 			transform[2].y = 540
 	else:
-		if rotation_degrees != -timer*6 and !clock_return:
-			rotation_degrees -= (rotation_degrees-int(-timer*6)%360 + int(timer*6)-timer*6) * delta *3
-			if abs(rotation_degrees+timer*6) < 0.1:
-				rotation_degrees = -timer*6
+		if rotation_degrees != timer_degree and !clock_return:
+			rotation_degrees -= delta*(rotation_degrees-timer_degree)*2.5
+			if abs(rotation_degrees-timer_degree) < 0.1:
+				rotation_degrees = timer_degree
 		if old_y != transform[2].y:
 			get_node("Button").rect_scale.x = 1
 			get_node("Button").rect_scale.y = 1
@@ -85,16 +90,16 @@ func _process(delta):
 			root.get_node("Player").get_node("buff").buff_add(0, floor(timer) - old_timer_floor)
 		old_timer_floor = floor(timer)
 		root.use_card = true
-	if abs(rotation_degrees+timer*6) > 6 and clock_return:
-		rotation_degrees -= delta*(rotation_degrees+timer*6)*2.5
+	if abs(rotation_degrees-timer_degree) > 6 and clock_return:
+		rotation_degrees -= delta*(rotation_degrees-180+int(180+timer*6)%360-int(timer*6)+timer*6)*2.5
 	if abs(get_node("Secondhand").rotation_degrees-180-timer*6) > 6:
 		get_node("Secondhand").rotation_degrees -= delta*(get_node("Secondhand").rotation_degrees-180-timer*6)*2.5
-	if abs(rotation_degrees+timer*6) <= 6 and clock_return:
-		rotation_degrees -= delta*(rotation_degrees+timer*6)
+	if abs(rotation_degrees-timer_degree) <= 6 and clock_return:
+		rotation_degrees -= delta*(rotation_degrees-180+int(180+timer*6)%360-int(timer*6)+timer*6)
 	if abs(get_node("Secondhand").rotation_degrees-180-timer*6) <= 6:
 		get_node("Secondhand").rotation_degrees -= delta*(get_node("Secondhand").rotation_degrees-180-timer*6)
-	if abs(rotation_degrees+timer*6)<0.05 and clock_return:
-		rotation_degrees = -timer*6
+	if rotation_degrees+timer_degree*6 != 0 and abs(rotation_degrees-timer_degree)<0.05 and clock_return:
+		rotation_degrees = 180-int(180+timer*6)%360+int(timer*6)-timer*6
 	if abs(get_node("Secondhand").rotation_degrees-timer*6) < 0.05:
 		get_node("Secondhand").rotation_degrees = timer*6 + 180
 	pass
@@ -123,4 +128,11 @@ func _on_Button_button_up():
 		if look_clock:
 			look_clock = false
 	in_range = false
+	pass # Replace with function body.
+
+func _on_clock_preview_pressed():
+	if get_node("Battle_clock_preview").visible == true:
+		get_node("Battle_clock_preview").visible = false
+	else:
+		get_node("Battle_clock_preview").visible = true
 	pass # Replace with function body.

@@ -160,3 +160,11 @@ func _on_Button_pressed():
 	roads[road_now].visible = true
 	roads[road_now].start()
 	pass # Replace with function body.
+
+
+func _on_Button2_pressed():
+	pass # Replace with function body.
+
+
+func _on_Button3_pressed():
+	pass # Replace with function body.

@@ -5,17 +5,27 @@ extends Sprite
 # var a = 2
 # var b = "text"
 
-var cards = [0,1,2,3,4,5,6,7,8,9,10]
+onready var player_deck = get_parent().get_parent().get_node("Player_deck")
+var cards = []
 var old_cards = []
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	cards += player_deck.cards
 	rng.randomize()
 	shuffle()
 	old_cards += cards
 	pass # Replace with function body.
+
+func start():
+	cards = []
+	cards += player_deck.cards
+	old_cards = []
+	rng.randomize()
+	shuffle()
+	old_cards += cards
 
 func restart():
 	cards = []

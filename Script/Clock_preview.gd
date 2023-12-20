@@ -24,12 +24,13 @@ func draw_circle_arc_poly(x, y, radius, angle_from, angle_to, color):
 		points_arc.push_back(Vector2(x, y) + Vector2(cos(angle_point), sin(angle_point)) * radius)
 	draw_polygon(points_arc, colors)
 
+var colors = [Color(0, 0, 1, 0.5),Color(1, 0, 0, 0.5),Color(1, 0.843137, 0,0.5),Color(0.627451, 0.12549, 0.941176, 0.5),Color(1, 1, 1, 0.5)]
+
 func _draw():
-	var radius = 446
+	var radius = 372
 	var color
 	angle_from = 0
 	angle_to = 0
-	var colors = [Color(0, 0, 1, 0.5),Color(1, 0, 0, 0.5),Color(1, 0.843137, 0,0.5),Color(0.627451, 0.12549, 0.941176, 0.5),Color(1, 1, 1, 0.5)]
 	if time_road != []:
 		for i in time_road.size():
 			if time_road[i] != time_road[i-1]:
@@ -50,4 +51,5 @@ func _process(delta):
 		time_road += road.time_road
 		update()
 		draw = true
+		
 	pass

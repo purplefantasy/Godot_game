@@ -35,11 +35,11 @@ func _draw():
 			if time_road[i] != time_road[i-1]:
 				color = colors[time_road[i-1]]
 				angle_to = i*6
-				draw_circle_arc_poly( 0, 0, radius, angle_from, angle_to, color )
+				draw_circle_arc_poly( 0, 0, radius, angle_from+180, angle_to+180, color )
 				angle_from = i*6
 		angle_to = 360
 		color = colors[time_road[59]]
-		draw_circle_arc_poly( 0, 0, radius, angle_from, angle_to, color )
+		draw_circle_arc_poly( 0, 0, radius, angle_from+180, angle_to+180, color )
 	pass
 	
 var draw = false
