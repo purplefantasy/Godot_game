@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Image/clock.png" type="Texture" id=1]
 [ext_resource path="res://Script/minute.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Image/card.png" type="Texture" id=4]
 [ext_resource path="res://Image/secondhand.png" type="Texture" id=5]
 [ext_resource path="res://Image/road_background.png" type="Texture" id=6]
+[ext_resource path="res://Image/icon_battle.png" type="Texture" id=7]
 
 [node name="Road" type="Node2D"]
 script = ExtResource( 3 )
@@ -43,23 +44,48 @@ scale = Vector2( 1.9604, 0.411165 )
 texture = ExtResource( 4 )
 
 [node name="Button" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0.490196 )
 margin_left = 674.0
 margin_top = 870.0
 margin_right = 852.0
 margin_bottom = 978.0
 
+[node name="Sprite" type="Sprite" parent="Button"]
+position = Vector2( 89, 55 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 7 )
+
 [node name="Button2" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0.490196 )
 margin_left = 1046.0
 margin_top = 871.0
 margin_right = 1224.0
 margin_bottom = 979.0
 
+[node name="Sprite" type="Sprite" parent="Button2"]
+position = Vector2( 89, 55 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 7 )
+
 [node name="Button3" type="Button" parent="."]
+self_modulate = Color( 1, 1, 1, 0.490196 )
 margin_left = 1412.0
 margin_top = 874.0
 margin_right = 1590.0
 margin_bottom = 982.0
 
+[node name="Sprite" type="Sprite" parent="Button3"]
+position = Vector2( 89, 55 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 7 )
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 1665.0
+margin_top = 109.0
+margin_right = 1773.0
+margin_bottom = 214.0
+
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_Button4_pressed"]

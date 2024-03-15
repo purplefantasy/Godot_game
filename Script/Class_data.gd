@@ -5,28 +5,24 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var buff_name = [
-	"蓄勢",
-	"倍化",
-	"攻擊擴散",
-	"復甦",
-	"功能封鎖"
+var class_names = [
+	"武士",
+	"2",
+	"3"
 ]
 
-var index_time_reduce = [
-	false,
-	false,
-	false,
-	false,
-	true
+var class_discript = [
+	"123",
+	"456",
+	"789"
 ]
 
-var buff_discript = [
-	"每有一層[color=green]蓄勢[/color]"
+var class_skill = [
+	"每秒獲得一層蓄勢，蓄勢：每層使傷害次數增加1倍，傷害結算後消失",
+	"2",
+	"3"
 ]
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

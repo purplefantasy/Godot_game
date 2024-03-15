@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scenes/Battle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Road.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://Script/Buff_data.gd" type="Script" id=14]
 [ext_resource path="res://Script/Clock_preview.gd" type="Script" id=15]
 [ext_resource path="res://Script/Enemy_skills.gd" type="Script" id=16]
+[ext_resource path="res://Script/Class_data.gd" type="Script" id=17]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
@@ -92,6 +93,9 @@ script = ExtResource( 15 )
 
 [node name="Enemy_skills" type="Node2D" parent="."]
 script = ExtResource( 16 )
+
+[node name="Class_data" type="Node2D" parent="."]
+script = ExtResource( 17 )
 
 [connection signal="pressed" from="Secret/Button" to="Secret" method="_on_Button_pressed"]
 [connection signal="pressed" from="Secret/Button2" to="Secret" method="_on_Button2_pressed"]

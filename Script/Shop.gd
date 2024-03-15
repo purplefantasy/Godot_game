@@ -46,7 +46,6 @@ func buy_card(index, cost):
 
 
 func _on_Leave_pressed():
-	game.game_time += 5.0
 	road.visible = true
 	visible = false
 	pass # Replace with function body.

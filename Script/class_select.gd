@@ -15,7 +15,3 @@ func _ready():
 #func _process(delta):
 #	pass
 
-
-func _on_class_pressed():
-	get_node("Select_class").visible = true
-	pass # Replace with function body.

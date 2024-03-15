@@ -18,6 +18,7 @@ enum road_event {
 	boss
 	}
 var road_event_icon = [
+	preload("res://Image/icon_battle.png"),
 	preload("res://Image/icon_hard_battle.png"),
 	preload("res://Image/icon_treasure.png"),
 	preload("res://Image/icon_secret.png"),
@@ -112,7 +113,7 @@ func _ready():
 				road_icon.transform[2].x = 272* cos(deg2rad(icon_pos*6-90.0))
 				road_icon.transform[2].y = 272* sin(deg2rad(icon_pos*6-90.0))
 				if time_road[i-1] > 0:
-					road_icon.texture = road_event_icon[time_road[i-1]-1]
+					road_icon.texture = road_event_icon[time_road[i-1]]
 				$second/road_icon.add_child(road_icon)
 				$second/road_pos.add_child(road_pos)
 				icon_pos = i
@@ -125,7 +126,7 @@ func _ready():
 		road_icon = load("res://prefab/road_icon.tscn").instance()
 		road_icon.transform[2].x = 272* cos(deg2rad(icon_pos*6-90.0))
 		road_icon.transform[2].y = 272* sin(deg2rad(icon_pos*6-90.0))
-		road_icon.texture = road_event_icon[time_road[59]-1]
+		road_icon.texture = road_event_icon[time_road[59]]
 	else:
 		$second/road_icon.get_child(0).queue_free()
 		icon_pos = float(icon_pos + first_pos + 60)/2
@@ -134,9 +135,16 @@ func _ready():
 		road_icon.transform[2].x = 272* cos(deg2rad(icon_pos*6-90.0))
 		road_icon.transform[2].y = 272* sin(deg2rad(icon_pos*6-90.0))
 		
+	button_icon_change()
 	$second/road_icon.add_child(road_icon)
 	pass # Replace with function body.
 	
+
+func button_icon_change():
+	road_count()
+	$Button/Sprite.texture = road_event_icon[road_way[0]]
+	$Button2/Sprite.texture = road_event_icon[road_way[1]]
+	$Button3/Sprite.texture = road_event_icon[road_way[2]]
 
 var old_visible = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -144,6 +152,7 @@ func _process(delta):
 	if old_visible != visible:
 		old_visible = visible
 		clock_preview.visible = visible
+		button_icon_change()
 	pass
 	get_node("second").get_node("secondhand").rotation_degrees = game.game_time*6
 	get_node("minute").get_node("minutehand").rotation_degrees = game.game_time/10
@@ -152,19 +161,75 @@ func _process(delta):
 	pass
 
 onready var roads = [game.get_node("Battle"),game.get_node("Battle"),game.get_node("Treasure"),game.get_node("Secret"),game.get_node("Shop")]
-var road_now
+
+var road_way = []
+var road_time = []
+
+func road_count():
+	road_way = []
+	road_time = []
+	var temp_road = time_road[int(game.game_time) % 60]
+	var temp_time = game.game_time
+	road_way.push_back(temp_road)
+	road_time.push_back(temp_time)
+	var old_road_now = temp_road
+	for i in range( int(temp_time)%60 , 60):
+		if time_road[i] != temp_road:
+			temp_road = time_road[i]
+			temp_time+= i-int(temp_time)%60
+			break
+	if temp_road == old_road_now:
+		for i in 60:
+			if time_road[i] != temp_road:
+				temp_road = time_road[i]
+				temp_time+= 60-int(temp_time)%60+i
+				break
+	road_way.push_back(temp_road)
+	road_time.push_back(temp_time)
+	old_road_now = temp_road
+	for i in range( int(temp_time)%60 , 60):
+		if time_road[i] != temp_road:
+			temp_road = time_road[i]
+			temp_time+= i-int(temp_time)%60
+			break
+	if temp_road == old_road_now:
+		for i in 60:
+			if time_road[i] != temp_road:
+				temp_road = time_road[i]
+				temp_time+= 60-int(temp_time)%60+i
+				break
+	road_way.push_back(temp_road)
+	road_time.push_back(temp_time)
+	pass
 
 func _on_Button_pressed():
-	road_now = time_road[int(game.game_time) % 60]
 	visible = false
-	roads[road_now].visible = true
-	roads[road_now].start()
+	roads[road_way[0]].visible = true
+	roads[road_way[0]].start()
 	pass # Replace with function body.
 
 
 func _on_Button2_pressed():
+	
+	game.game_time = road_time[1]
+	visible = false
+	roads[road_way[1]].visible = true
+	roads[road_way[1]].start()
 	pass # Replace with function body.
 
 
 func _on_Button3_pressed():
+	
+	game.game_time = road_time[2]
+	visible = false
+	roads[road_way[2]].visible = true
+	roads[road_way[2]].start()
+	pass # Replace with function body.
+
+
+func _on_Button4_pressed():
+	if clock_preview.visible:
+		clock_preview.visible = false
+	else:
+		clock_preview.visible = true
 	pass # Replace with function body.

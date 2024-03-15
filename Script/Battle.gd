@@ -201,7 +201,7 @@ func enemy_alive(index):
 func _process(delta):
 	if win:
 		$".".visible = false
-		game.game_time += get_node("Clock").timer
+		game.game_time = get_node("Clock").timer
 		reward.visible = true
 		player_state.hp = player.hp
 		restart()
