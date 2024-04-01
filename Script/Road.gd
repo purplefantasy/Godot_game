@@ -36,8 +36,16 @@ var r
 var r_road
 var check = [1,0,0,0,0]
 var all = false
+var road_pos_list = []
+var mouse_area = -1
+var area_chose = -1
+var degree = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	for i in 60:
+		degree.push_back(tan(i*6 * (PI / 180)))
+	degree.push_back(0)
 	for i in 5:
 		rates_sum += rates[i]
 	rates_final.push_back(rates[0] / rates_sum*100.0)
@@ -98,6 +106,7 @@ func _ready():
 	var road_pos
 	var road_icon
 	var icon_pos = 0
+	
 	for i in 60:
 		if i > 0:
 			if time_road[i] != time_road[i-1]:
@@ -109,6 +118,7 @@ func _ready():
 				road_pos.transform[2].x = 288* cos(deg2rad(i*6-90.0))
 				road_pos.transform[2].y = 288* sin(deg2rad(i*6-90.0))
 				road_pos.rotation_degrees = i*6
+				road_pos_list.push_back(i)
 				road_icon = load("res://prefab/road_icon.tscn").instance()
 				road_icon.transform[2].x = 272* cos(deg2rad(icon_pos*6-90.0))
 				road_icon.transform[2].y = 272* sin(deg2rad(icon_pos*6-90.0))
@@ -117,7 +127,9 @@ func _ready():
 				$second/road_icon.add_child(road_icon)
 				$second/road_pos.add_child(road_pos)
 				icon_pos = i
+	road_pos_list.push_front(0)
 	if time_road[59] != 0:
+		road_pos_list.push_back(60)
 		road_pos = load("res://prefab/road_pos.tscn").instance()
 		road_pos.transform[2].x = 288* cos(deg2rad(-90.0))
 		road_pos.transform[2].y = 288* sin(deg2rad(-90.0))
@@ -130,106 +142,145 @@ func _ready():
 	else:
 		$second/road_icon.get_child(0).queue_free()
 		icon_pos = float(icon_pos + first_pos + 60)/2
-		print(icon_pos, " ",first_pos)
 		road_icon = load("res://prefab/road_icon.tscn").instance()
 		road_icon.transform[2].x = 272* cos(deg2rad(icon_pos*6-90.0))
 		road_icon.transform[2].y = 272* sin(deg2rad(icon_pos*6-90.0))
-		
-	button_icon_change()
+	
 	$second/road_icon.add_child(road_icon)
+	
 	pass # Replace with function body.
 	
 
-func button_icon_change():
-	road_count()
-	$Button/Sprite.texture = road_event_icon[road_way[0]]
-	$Button2/Sprite.texture = road_event_icon[road_way[1]]
-	$Button3/Sprite.texture = road_event_icon[road_way[2]]
 
 var old_visible = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	get_mouse_area()
 	if old_visible != visible:
 		old_visible = visible
-		clock_preview.visible = visible
-		button_icon_change()
+		area_chose = -1
+		if !clock_preview.visible and clock_preview_visible or clock_preview.visible:
+			clock_preview.visible = visible
 	pass
 	get_node("second").get_node("secondhand").rotation_degrees = game.game_time*6
 	get_node("minute").get_node("minutehand").rotation_degrees = game.game_time/10
 	if visible:
-		pass
+		if mouse_area >= 0 or area_chose >= 0:
+			if mouse_area >= 0:
+				for i in road_pos_list.size()-1:
+					if road_pos_list[road_pos_list.size()-1] != 60 and i == 0:
+						continue
+					if mouse_area >= road_pos_list[i] and mouse_area < road_pos_list[i+1]:
+						$second/secondhand_shadow.rotation_degrees = road_pos_list[i]*6
+						$second/secondhand_shadow.visible = true
+						break
+				if road_pos_list[road_pos_list.size()-1] != 60:
+					if mouse_area >= 0 and mouse_area < road_pos_list[1] or mouse_area >= road_pos_list[road_pos_list.size()-1]:
+						$second/secondhand_shadow.rotation_degrees = road_pos_list[road_pos_list.size()-1]*6
+						$second/secondhand_shadow.visible = true
+			if area_chose >= 0 and mouse_area < 0:
+				$second/secondhand_shadow.rotation_degrees = (area_chose)*6
+		else:
+			$second/secondhand_shadow.visible = false
+		if area_chose >= 0:
+			$Enter_road_button_icon.texture = road_event_icon[time_road[area_chose]]
+		else:
+			$Enter_road_button_icon.texture = road_event_icon[time_road[int(game.game_time)%60]]
 	pass
 
 onready var roads = [game.get_node("Battle"),game.get_node("Battle"),game.get_node("Treasure"),game.get_node("Secret"),game.get_node("Shop")]
 
-var road_way = []
 var road_time = []
 
-func road_count():
-	road_way = []
-	road_time = []
-	var temp_road = time_road[int(game.game_time) % 60]
-	var temp_time = game.game_time
-	road_way.push_back(temp_road)
-	road_time.push_back(temp_time)
-	var old_road_now = temp_road
-	for i in range( int(temp_time)%60 , 60):
-		if time_road[i] != temp_road:
-			temp_road = time_road[i]
-			temp_time+= i-int(temp_time)%60
-			break
-	if temp_road == old_road_now:
-		for i in 60:
-			if time_road[i] != temp_road:
-				temp_road = time_road[i]
-				temp_time+= 60-int(temp_time)%60+i
-				break
-	road_way.push_back(temp_road)
-	road_time.push_back(temp_time)
-	old_road_now = temp_road
-	for i in range( int(temp_time)%60 , 60):
-		if time_road[i] != temp_road:
-			temp_road = time_road[i]
-			temp_time+= i-int(temp_time)%60
-			break
-	if temp_road == old_road_now:
-		for i in 60:
-			if time_road[i] != temp_road:
-				temp_road = time_road[i]
-				temp_time+= 60-int(temp_time)%60+i
-				break
-	road_way.push_back(temp_road)
-	road_time.push_back(temp_time)
+
+
+var clock_preview_visible = true
+
+
+var mouse_x = 0
+var mouse_y = 0
+var in_range = false
+
+func _input(event):
+	if event is InputEventMouse:
+		mouse_x = event.position.x
+		mouse_y = event.position.y
 	pass
 
-func _on_Button_pressed():
-	visible = false
-	roads[road_way[0]].visible = true
-	roads[road_way[0]].start()
-	pass # Replace with function body.
 
 
-func _on_Button2_pressed():
+func get_mouse_area():
+	if  pow(mouse_x-$second.transform[2].x,2) + pow(mouse_y-$second.transform[2].y,2) < pow(256*1.5,2):
+		var mouse_slope
+		if  ($second.transform[2].y-mouse_y) != 0:
+			mouse_slope = ((mouse_x-$second.transform[2].x) / ($second.transform[2].y-mouse_y))
+		else:
+			mouse_slope = ((mouse_x-$second.transform[2].x) / -0.01)
+		if mouse_x-$second.transform[2].x > 0 and $second.transform[2].y-mouse_y > 0:
+			for i in 15:
+				if mouse_slope >= degree[i]:
+					mouse_area = i
+		elif mouse_x-$second.transform[2].x > 0 and $second.transform[2].y-mouse_y < 0:
+			for i in 15:
+				if mouse_slope < degree[i+16]:
+					mouse_area = i+15
+					break
+		elif mouse_x-$second.transform[2].x < 0 and $second.transform[2].y-mouse_y < 0:
+			for i in 15:
+				if mouse_slope >= degree[i+30]:
+					mouse_area = i+30
+		elif mouse_x-$second.transform[2].x < 0 and $second.transform[2].y-mouse_y > 0:
+			for i in 15:
+				if mouse_slope < degree[i+46]:
+					mouse_area = i+45
+					break
+	else:
+		mouse_area = -1
+
 	
-	game.game_time = road_time[1]
-	visible = false
-	roads[road_way[1]].visible = true
-	roads[road_way[1]].start()
+
+func _on_Clock_Button_button_down():
+	if  pow(mouse_x-$second.transform[2].x,2) + pow(mouse_y-$second.transform[2].y,2) < pow(512,2):
+		in_range = true
 	pass # Replace with function body.
 
 
-func _on_Button3_pressed():
-	
-	game.game_time = road_time[2]
-	visible = false
-	roads[road_way[2]].visible = true
-	roads[road_way[2]].start()
+func _on_Clock_Button_button_up():
+	if pow(mouse_x-$second.transform[2].x,2) + pow(mouse_y-$second.transform[2].y,2) < pow(512,2) and in_range:
+		for i in road_pos_list.size()-1:
+			if road_pos_list[road_pos_list.size()-1] != 60 and i == 0:
+				continue
+			if mouse_area >= road_pos_list[i] and mouse_area < road_pos_list[i+1]:
+				area_chose = road_pos_list[i]
+		if road_pos_list[road_pos_list.size()-1] != 60:
+			if mouse_area >= 0 and mouse_area < road_pos_list[1] or mouse_area >= road_pos_list[road_pos_list.size()-1]:
+				area_chose = road_pos_list[road_pos_list.size()-1]
+	in_range = false
 	pass # Replace with function body.
 
 
-func _on_Button4_pressed():
-	if clock_preview.visible:
+func _on_Clock_priview_button_pressed():
+	if clock_preview_visible:
+		clock_preview_visible = false
 		clock_preview.visible = false
 	else:
+		clock_preview_visible = true
 		clock_preview.visible = true
+	pass # Replace with function body.
+
+
+func _on_Enter_road_button_pressed():
+	if int(game.game_time) % 60 < area_chose:
+		game.game_time = int(game.game_time) / 60 * 60 + area_chose
+	else:
+		if area_chose != -1:
+			game.game_time = int(game.game_time) / 60 * 60 + area_chose + 60
+	if area_chose > 0 :
+		visible = false
+		roads[time_road[area_chose]].visible = true
+		roads[time_road[area_chose]].start()
+	else:
+		visible = false
+		roads[time_road[int(game.game_time)%60]].visible = true
+		roads[time_road[int(game.game_time)%60]].start()
 	pass # Replace with function body.

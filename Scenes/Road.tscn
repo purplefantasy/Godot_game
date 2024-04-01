@@ -29,6 +29,12 @@ position = Vector2( 1215, 431 )
 scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 
+[node name="secondhand_shadow" type="Sprite" parent="second"]
+modulate = Color( 0.415686, 0.415686, 0.415686, 0.803922 )
+scale = Vector2( 0.125, 0.125 )
+z_index = 1
+texture = ExtResource( 5 )
+
 [node name="secondhand" type="Sprite" parent="second"]
 scale = Vector2( 0.125, 0.125 )
 z_index = 1
@@ -38,54 +44,41 @@ texture = ExtResource( 5 )
 
 [node name="road_icon" type="Node2D" parent="second"]
 
+[node name="Clock_Button" type="Button" parent="second"]
+modulate = Color( 1, 1, 1, 0.329412 )
+margin_left = -256.0
+margin_top = -256.0
+margin_right = 256.0
+margin_bottom = 256.0
+
 [node name="Rest" type="Sprite" parent="."]
 position = Vector2( 304, 920 )
 scale = Vector2( 1.9604, 0.411165 )
 texture = ExtResource( 4 )
 
-[node name="Button" type="Button" parent="."]
-self_modulate = Color( 1, 1, 1, 0.490196 )
-margin_left = 674.0
-margin_top = 870.0
-margin_right = 852.0
-margin_bottom = 978.0
-
-[node name="Sprite" type="Sprite" parent="Button"]
-position = Vector2( 89, 55 )
-scale = Vector2( 3, 3 )
-texture = ExtResource( 7 )
-
-[node name="Button2" type="Button" parent="."]
-self_modulate = Color( 1, 1, 1, 0.490196 )
-margin_left = 1046.0
-margin_top = 871.0
-margin_right = 1224.0
-margin_bottom = 979.0
-
-[node name="Sprite" type="Sprite" parent="Button2"]
-position = Vector2( 89, 55 )
-scale = Vector2( 3, 3 )
-texture = ExtResource( 7 )
-
-[node name="Button3" type="Button" parent="."]
-self_modulate = Color( 1, 1, 1, 0.490196 )
-margin_left = 1412.0
-margin_top = 874.0
-margin_right = 1590.0
-margin_bottom = 982.0
-
-[node name="Sprite" type="Sprite" parent="Button3"]
-position = Vector2( 89, 55 )
-scale = Vector2( 3, 3 )
-texture = ExtResource( 7 )
-
-[node name="Button4" type="Button" parent="."]
+[node name="Clock_priview_button" type="Button" parent="."]
 margin_left = 1665.0
 margin_top = 109.0
 margin_right = 1773.0
 margin_bottom = 214.0
+focus_mode = 0
+enabled_focus_mode = 0
 
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
-[connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]
-[connection signal="pressed" from="Button4" to="." method="_on_Button4_pressed"]
+[node name="Enter_road_button_icon" type="Sprite" parent="."]
+position = Vector2( 1626, 925 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 7 )
+
+[node name="Enter_road_button" type="Button" parent="Enter_road_button_icon"]
+modulate = Color( 1, 1, 1, 0.784314 )
+margin_left = -50.0
+margin_top = -25.0
+margin_right = 50.0
+margin_bottom = 25.0
+focus_mode = 0
+enabled_focus_mode = 0
+
+[connection signal="button_down" from="second/Clock_Button" to="." method="_on_Clock_Button_button_down"]
+[connection signal="button_up" from="second/Clock_Button" to="." method="_on_Clock_Button_button_up"]
+[connection signal="pressed" from="Clock_priview_button" to="." method="_on_Clock_priview_button_pressed"]
+[connection signal="pressed" from="Enter_road_button_icon/Enter_road_button" to="." method="_on_Enter_road_button_pressed"]
