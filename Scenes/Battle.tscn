@@ -78,7 +78,7 @@ visible = false
 position = Vector2( 128, 129 )
 scale = Vector2( 2.25, 2.25 )
 frames = SubResource( 2 )
-frame = 16
+frame = 20
 playing = true
 
 [node name="Card1" parent="." instance=ExtResource( 1 )]

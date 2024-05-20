@@ -45,7 +45,7 @@ texture = ExtResource( 5 )
 [node name="road_icon" type="Node2D" parent="second"]
 
 [node name="Clock_Button" type="Button" parent="second"]
-modulate = Color( 1, 1, 1, 0.329412 )
+modulate = Color( 1, 1, 1, 0 )
 margin_left = -256.0
 margin_top = -256.0
 margin_right = 256.0
